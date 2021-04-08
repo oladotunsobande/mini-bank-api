@@ -13,3 +13,8 @@ export const APP_PORT = throwIfUndefined(
   process.env.APP_PORT,
   'APP_PORT',
 );
+
+export const MONGO_URL = throwIfUndefined(
+  process.env.MONGO_URL,
+  'MONGO_URL',
+);
