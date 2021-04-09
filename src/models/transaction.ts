@@ -1,5 +1,6 @@
 import { Schema, Document, Types } from 'mongoose';
 import { TRANSACTION_CATEGORIES } from '../constants/transaction';
+import { OtherDetailsInterface } from '../types/transaction';
 
 export interface ITransaction extends Document {
   accountId: Types.ObjectId;
@@ -7,7 +8,17 @@ export interface ITransaction extends Document {
   reference: string;
   narration: string;
   amount: number;
+  otherDetails?: OtherDetailsInterface;
 }
+
+const OtherDetailsSchema = new Schema({
+  depositedByCustomer: Boolean,
+  otcDeposit: Boolean,
+  sourceAccount: String,
+  destinationAccount: String,
+  previousBalance: Number,
+  newBalance: Number,
+});
 
 export const TransactionSchema = new Schema(
   {
@@ -30,7 +41,8 @@ export const TransactionSchema = new Schema(
     amount: {
       type: Number,
       required: true,
-    }
+    },
+    otherDetails: { type: OtherDetailsSchema, required: false },
   },
   { timestamps: true },
 );

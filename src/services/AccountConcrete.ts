@@ -47,6 +47,8 @@ class AccountConcrete implements Account {
         amount,
       );
       if (!response.status) throw response.error;
+
+      const previousBalance = response.account!.availableBalance;
   
       // Update account balance
       await AccountRepository.update({
@@ -70,6 +72,12 @@ class AccountConcrete implements Account {
         reference: transactionResponse.data.reference,
         narration: transactionResponse.data.narration,
         amount,
+        otherDetails: {
+          depositedByCustomer: (customerName) ? false : true,
+          otcDeposit: (customerName) ? true : false,
+          previousBalance,
+          newBalance: response.account!.availableBalance + amount,
+        },
       });
     })
     .catch((err) => {
@@ -108,6 +116,9 @@ class AccountConcrete implements Account {
       );
       if (!destinationResponse.status) throw destinationResponse.error;
 
+      const sourcePreviousBalance = sourceResponse.account!.availableBalance;
+      const destinationPreviousBalance = destinationResponse.account!.totalBalance;
+
       // <======== Debit source account
       
       await AccountRepository.update({
@@ -130,6 +141,13 @@ class AccountConcrete implements Account {
         reference: sourceTransactionResponse.data.reference,
         narration: sourceTransactionResponse.data.narration,
         amount,
+        otherDetails: {
+          depositedByCustomer: false,
+          otcDeposit: false,
+          destinationAccount: destinationResponse.account!.accountNumber,
+          previousBalance: sourcePreviousBalance,
+          newBalance: sourcePreviousBalance - amount,
+        },
       });
 
       // ==============>
@@ -156,6 +174,13 @@ class AccountConcrete implements Account {
         reference: destinationTransactionResponse.data.reference,
         narration: destinationTransactionResponse.data.narration,
         amount,
+        otherDetails: {
+          depositedByCustomer: false,
+          otcDeposit: false,
+          sourceAccount: sourceResponse.account!.accountNumber,
+          previousBalance: destinationPreviousBalance,
+          newBalance: destinationPreviousBalance + amount,
+        },
       });
 
       // =================>

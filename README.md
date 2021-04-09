@@ -27,6 +27,7 @@ Set the environment variables listed below:
 NODE_ENV=
 APP_PORT=
 MONGO_URL=
+MONGO_URL_TEST=
 ```
 
 Run the following command to run the test cases:
@@ -42,11 +43,11 @@ $ npm run server
 ## API Documentation
 
 The REST API documentation for this application is available via the following link:
-`https://documenter.getpostman.com/view/`
+`https://documenter.getpostman.com/view/7658548/TzCV2isP`
 
 The documentation consists of all information needed to test the API.
 
-The `BASE_URL` for the server is ``.
+The `BASE_URL` for the server is `http://3.213.192.193:8090`.
 
 ## Author
 

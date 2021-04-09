@@ -12,6 +12,7 @@ class TransactionRepository {
     reference,
     narration,
     amount,
+    otherDetails,
   }: CreateTransactionInterface): Promise<ITransaction> {
     const transaction = new Transaction({
       accountId,
@@ -19,6 +20,7 @@ class TransactionRepository {
       reference,
       narration,
       amount,
+      otherDetails,
     });
 
     return transaction.save();
