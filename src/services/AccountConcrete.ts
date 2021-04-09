@@ -1,4 +1,5 @@
 import { startSession } from 'mongoose';
+import { logger } from '../util/logger';
 import { Account } from './Account';
 import { DefaultResponseType } from '../types';
 import { AccountValidationType } from '../types/account';
@@ -72,6 +73,8 @@ class AccountConcrete implements Account {
       });
     })
     .catch((err) => {
+      logger.error(err);
+
       return {
         status: false,
         error: err,
@@ -157,6 +160,8 @@ class AccountConcrete implements Account {
       // =================>
     })
     .catch((err) => {
+      logger.error(err);
+      
       return {
         status: false,
         error: err,
@@ -167,4 +172,4 @@ class AccountConcrete implements Account {
   }
 }
 
-export default AccountConcrete;
+export default new AccountConcrete();

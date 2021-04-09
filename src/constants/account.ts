@@ -9,6 +9,7 @@ export const ACCOUNT_CATEGORIES = {
 };
 
 export const ACCOUNT_NUMBER_MAX_LENGTH = 10;
+export const BVN_MAX_LENGTH = 11;
 
 export const ACCOUNT_OPERATIONS = {
   INFLOW: 'inflow',

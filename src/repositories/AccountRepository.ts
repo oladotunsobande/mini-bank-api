@@ -12,7 +12,6 @@ class AccountRepository {
     category,
     accountNumber,
     bvn,
-    initialDeposit,
     status,
   }: CreateAccountInterface): Promise<IAccount> {
     const account = new Account({
@@ -20,8 +19,6 @@ class AccountRepository {
       category,
       accountNumber,
       bvn,
-      availableBalance: initialDeposit,
-      totalBalance: initialDeposit,
       status,
     });
 

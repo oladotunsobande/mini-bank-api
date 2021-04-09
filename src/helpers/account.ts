@@ -1,5 +1,10 @@
+import rs from 'randomstring';
 import { AccountValidationType } from '../types/account';
-import { ACCOUNT_STATUSES, ACCOUNT_OPERATIONS } from '../constants/account';
+import { 
+  ACCOUNT_STATUSES, 
+  ACCOUNT_OPERATIONS,
+  ACCOUNT_NUMBER_MAX_LENGTH,
+} from '../constants/account';
 import AccountRepository from '../repositories/AccountRepository';
 
 export async function validateAccountOperation(
@@ -42,4 +47,16 @@ export async function validateAccountOperation(
     status: true,
     account,
   };
+}
+
+export async function getAccountNumber(): Promise<string> {
+  const accountNumber: string = rs.generate({
+    charset: 'numeric',
+    length: ACCOUNT_NUMBER_MAX_LENGTH,
+  });
+
+  const account = await AccountRepository.getOneBy({ accountNumber });
+  if (account) await getAccountNumber();
+
+  return accountNumber;
 }

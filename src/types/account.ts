@@ -6,7 +6,6 @@ export interface CreateAccountInterface {
   category: string;
   accountNumber: string;
   bvn?: string;
-  initialDeposit: number;
   status?: string;
 }
 
