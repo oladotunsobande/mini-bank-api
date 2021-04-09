@@ -9,7 +9,6 @@ export async function run() {
 
   const count = await CustomerRepository.count();
   if (count == 0) {
-    console.log('running');
     await CustomerRepository.createMany(customers);
     logger.info('Migration of customers successful!');
   }

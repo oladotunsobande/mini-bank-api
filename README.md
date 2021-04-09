@@ -35,6 +35,11 @@ Run the following command to run the test cases:
 $ npm run test
 ```
 
+To populate the default customers, run the migration script using the command below:
+```
+$ npm run migrate
+```
+
 You can start the app by running the following command:
 ```
 $ npm run server
