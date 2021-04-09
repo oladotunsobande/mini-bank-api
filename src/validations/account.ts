@@ -44,9 +44,11 @@ export async function validateTransferFunds(
   const schema = Joi.object().keys({
     customerId: Joi.number().required(),
     sourceAccount: Joi.string()
+      .regex(/^\d+$/)
       .length(ACCOUNT_NUMBER_MAX_LENGTH)
       .required(),
     destinationAccount: Joi.string()
+      .regex(/^\d+$/)
       .length(ACCOUNT_NUMBER_MAX_LENGTH)
       .required(),
     amount: Joi.number().positive().required(),
@@ -75,6 +77,7 @@ export async function validateGetBalance(
   const schema = Joi.object().keys({
     customerId: Joi.number().required(),
     accountNumber: Joi.string()
+      .regex(/^\d+$/)
       .length(ACCOUNT_NUMBER_MAX_LENGTH)
       .required(),
   });

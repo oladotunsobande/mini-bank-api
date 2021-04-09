@@ -28,7 +28,7 @@ app.get('/', async (req: ExpressRequest, res: Response) => {
 });
 
 app.use((req: ExpressRequest, res: Response) => {
-  return ResponseHandler.sendErrorResponse({ res, error: 'Route not found' });
+  return ResponseHandler.sendErrorResponse({ res, status: 404, error: 'Route not found' });
 });
 
 app.use((error: any, req: ExpressRequest, res: Response, next: NextFunction) => {

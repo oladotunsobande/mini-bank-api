@@ -1,4 +1,4 @@
-import { startSession } from 'mongoose';
+import { db } from '../util/mongo';
 import { logger } from '../util/logger';
 import { Account } from './Account';
 import { DefaultResponseType } from '../types';
@@ -38,7 +38,7 @@ class AccountConcrete implements Account {
     amount: number,
     customerName?: string,
   ): Promise<DefaultResponseType> {
-    const session = await startSession();
+    const session = await db.startSession();
 
     await session.withTransaction(async () => {
       const response: AccountValidationType = await AccountHelper.validateAccountOperation(
@@ -89,7 +89,7 @@ class AccountConcrete implements Account {
     destinationAccount: string, 
     amount: number,
   ): Promise<DefaultResponseType> {
-    const session = await startSession();
+    const session = await db.startSession();
 
     await session.withTransaction(async () => {
       // Validate source account
@@ -109,7 +109,7 @@ class AccountConcrete implements Account {
       if (!destinationResponse.status) throw destinationResponse.error;
 
       // <======== Debit source account
-
+      
       await AccountRepository.update({
         account: sourceResponse.account!,
         availableBalance: sourceResponse.account!.availableBalance - amount,
@@ -120,7 +120,7 @@ class AccountConcrete implements Account {
         amount,
         transactionCategory: TRANSACTION_CATEGORIES.DEBIT,
         isDeposit: false,
-        account: sourceResponse.account!,
+        account: destinationResponse.account!,
       });
 
       // Set debit transaction
@@ -135,6 +135,7 @@ class AccountConcrete implements Account {
       // ==============>
 
       // <======== Credit destination account
+      
       await AccountRepository.update({
         account: destinationResponse.account!,
         availableBalance: destinationResponse.account!.availableBalance + amount,
@@ -145,7 +146,7 @@ class AccountConcrete implements Account {
         amount,
         transactionCategory: TRANSACTION_CATEGORIES.CREDIT,
         isDeposit: false,
-        account: destinationResponse.account!,
+        account: sourceResponse.account!,
       });
 
       // Set debit transaction

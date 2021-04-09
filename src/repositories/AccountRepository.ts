@@ -19,6 +19,7 @@ class AccountRepository {
       category,
       accountNumber,
       bvn,
+      openedAt: new Date(),
       status,
     });
 
@@ -31,15 +32,13 @@ class AccountRepository {
     lienBalance,
     availableBalance,
     totalBalance,
-    openedAt,
     closedAt,
     status,
   }: UpdateAcccountInterface): Promise<IAccount> {
     if (bvn) account.bvn = bvn;
-    if (lienBalance) account.lienBalance = lienBalance;
-    if (availableBalance) account.availableBalance = availableBalance;
-    if (totalBalance) account.totalBalance = totalBalance;
-    if (openedAt) account.openedAt = openedAt;
+    if (lienBalance != undefined) account.lienBalance = lienBalance;
+    if (availableBalance != undefined) account.availableBalance = availableBalance;
+    if (totalBalance != undefined) account.totalBalance = totalBalance;
     if (closedAt) account.closedAt = closedAt;
     if (status) account.status = status;
 

@@ -13,6 +13,7 @@ export async function validateGetTransactions(
   const schema = Joi.object().keys({
     customerId: Joi.number().required(),
     accountNumber: Joi.string()
+      .regex(/^\d+$/)
       .length(ACCOUNT_NUMBER_MAX_LENGTH)
       .required(),
     skip: Joi.number().min(0),

@@ -15,7 +15,6 @@ export interface UpdateAcccountInterface {
   lienBalance?: number;
   availableBalance?: number;
   totalBalance?: number;
-  openedAt?: Date;
   closedAt?: Date;
   status?: string;
 }

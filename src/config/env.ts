@@ -1,6 +1,6 @@
 import appRootPath from 'app-root-path';
 import dotenv from 'dotenv';
-import { throwIfUndefined } from '../helpers';
+import { throwIfUndefined, randomizeMongoURL } from '../helpers';
 
 dotenv.config({ path: `${appRootPath.path}/.env` });
 
@@ -14,7 +14,9 @@ export const APP_PORT = throwIfUndefined(
   'APP_PORT',
 );
 
-export const MONGO_URL = throwIfUndefined(
-  process.env.MONGO_URL,
-  'MONGO_URL',
-);
+export const MONGO_URL =
+  NODE_ENV === 'test'
+    ? randomizeMongoURL(
+      throwIfUndefined(process.env.MONGO_URL_TEST, 'MONGO_URL_TEST'),
+    )
+    : throwIfUndefined(process.env.MONGO_URL, 'MONGO_URL');

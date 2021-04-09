@@ -6,8 +6,8 @@
     "typeRoots": ["./typings", "./node_modules/@types"],
     "outDir": "dist",               
     "esModuleInterop": true,
-    "types": ["node", "reflect-metadata"],                   
+    "types": ["node", "reflect-metadata", "mocha"],                   
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/*.test.ts"],
+  "exclude": ["node_modules", "/tests/"],
 }
