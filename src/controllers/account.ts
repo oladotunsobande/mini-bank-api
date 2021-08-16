@@ -4,7 +4,10 @@ import { ResponseType } from '../types';
 import ResponseHandler from '../util/response-handler';
 import { throwIfUndefined } from '../helpers';
 import * as AccountHelper from '../helpers/account';
-import { ACCOUNT_STATUSES } from '../constants/account';
+import {
+  ACCOUNT_STATUSES,
+  MAX_NUMBER_OF_CUSTOMER_ACCOUNTS,
+} from '../constants/account';
 import AccountRepository from '../repositories/AccountRepository';
 import AccountConcrete from '../services/AccountConcrete';
 import { DefaultResponseType } from '../types';
@@ -22,6 +25,16 @@ export async function create(
 
   try {
     const customer = throwIfUndefined(req.customer, 'req.customer');
+
+    const customerAccountCount = await AccountRepository.countBy({
+      customerId: customer._id,
+    });
+    if (customerAccountCount === MAX_NUMBER_OF_CUSTOMER_ACCOUNTS) {
+      return ResponseHandler.sendErrorResponse({
+        res,
+        error: 'Sorry! You have reached the maximum number of accounts for a customer',
+      });
+    }
 
     const accountNumber = await AccountHelper.getAccountNumber();
 
@@ -63,7 +76,7 @@ export async function getBalances(
   try {
     const customer = throwIfUndefined(req.customer, 'req.customer');
 
-    const account = await AccountRepository.getOneBy({ accountNumber });
+    const account = await AccountRepository.getOne({ accountNumber });
     if (!account) {
       return ResponseHandler.sendErrorResponse({
         res,

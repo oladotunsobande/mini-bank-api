@@ -45,11 +45,25 @@ class AccountRepository {
     return account.save();
   }
 
+  public async getOne(
+    query: AccountQueryParameters,
+    leanVersion: boolean = true,
+  ): Promise<IAccount | null> {
+    return Account.findOne(query)
+      .lean(leanVersion);
+  }
+
   public async getOneBy(
     query: AccountQueryParameters,
     leanVersion: boolean = true,
   ): Promise<IAccount | null> {
-    return Account.findOne(query).lean(leanVersion);
+    return Account.findOne(query)
+      .populate('customerId')
+      .lean(leanVersion);
+  }
+
+  public async countBy(query: AccountQueryParameters): Promise<number> {
+    return Account.countDocuments(query);
   }
 }
 

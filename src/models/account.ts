@@ -39,6 +39,7 @@ export const AccountSchema = new Schema(
     bvn: {
       type: String,
       required: false,
+      unique: true,
     },
     lienBalance: {
       type: Number,
@@ -66,8 +67,11 @@ export const AccountSchema = new Schema(
   { timestamps: true },
 );
 
-AccountSchema.index({
-  customerId: 1,
-  accountNumber: 1,
-  bvn: 1,
-});
+AccountSchema.index(
+  {
+    customerId: 1,
+    accountNumber: 1,
+    bvn: 1,
+  },
+  { unique: false },
+);
