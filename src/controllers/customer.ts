@@ -78,7 +78,7 @@ export async function login(
       });
     }
 
-    const customer = await CustomerRepository.getOneBy({ email });
+    const customer = await CustomerRepository.getOneBy({ email }, false);
     if (!customer || !(await customer.comparePassword(password))) {
       try {
         await consecutiveLoginFails.consume(email);

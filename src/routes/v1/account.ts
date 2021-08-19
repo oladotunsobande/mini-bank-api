@@ -5,10 +5,12 @@ import * as AccountValidation from '../../validations/account';
 
 const router = express.Router();
 
+// Authentication and authorization
+router.use(CustomerMiddleware.validateCustomerToken);
+
 // Create account
 router.post(
   '/create',
-  CustomerMiddleware.validateCustomerExistence,
   AccountValidation.validateCreateAccount,
   AccountController.create,
 );
@@ -16,7 +18,6 @@ router.post(
 // Get account balances
 router.post(
   '/balances',
-  CustomerMiddleware.validateCustomerExistence,
   AccountValidation.validateGetBalance,
   AccountController.getBalances,
 );
@@ -24,7 +25,6 @@ router.post(
 // Transfer funds
 router.post(
   '/transfer',
-  CustomerMiddleware.validateCustomerExistence,
   AccountValidation.validateTransferFunds,
   AccountController.transfer,
 );

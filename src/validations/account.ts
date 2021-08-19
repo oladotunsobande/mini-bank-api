@@ -14,7 +14,6 @@ export async function validateCreateAccount(
   next: NextFunction,
 ): Promise<ResponseType> {
   const schema = Joi.object().keys({
-    customerId: Joi.number().required(),
     category: Joi.string()
       .valid(...Object.values(ACCOUNT_CATEGORIES))
       .required(),
@@ -42,7 +41,6 @@ export async function validateTransferFunds(
   next: NextFunction,
 ): Promise<ResponseType> {
   const schema = Joi.object().keys({
-    customerId: Joi.number().required(),
     sourceAccount: Joi.string()
       .regex(/^\d+$/)
       .length(ACCOUNT_NUMBER_MAX_LENGTH)
@@ -75,7 +73,6 @@ export async function validateGetBalance(
   next: NextFunction,
 ): Promise<ResponseType> {
   const schema = Joi.object().keys({
-    customerId: Joi.number().required(),
     accountNumber: Joi.string()
       .regex(/^\d+$/)
       .length(ACCOUNT_NUMBER_MAX_LENGTH)

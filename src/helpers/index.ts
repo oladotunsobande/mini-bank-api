@@ -19,5 +19,5 @@ export function setRetryAfterTimeText(retrySeconds: number): string {
     return `${retrySeconds} second(s)`;
   }
   
-  return `${Math.ceil(retrySeconds)} minute(s)`;
+  return `${Math.ceil(retrySeconds / 60)} minute(s)`;
 }

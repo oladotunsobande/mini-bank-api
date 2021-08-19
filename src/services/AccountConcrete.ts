@@ -3,7 +3,11 @@ import { logger } from '../util/logger';
 import { Account } from './Account';
 import { DefaultResponseType } from '../types';
 import { AccountValidationType } from '../types/account';
-import { ACCOUNT_OPERATIONS } from '../constants/account';
+import { 
+  ACCOUNT_STATUSES,
+  ACCOUNT_OPERATIONS,
+  MINIMUM_ACCOUNT_DEPOSIT,
+} from '../constants/account';
 import { TRANSACTION_CATEGORIES } from '../constants/transaction';
 import * as AccountHelper from '../helpers/account';
 import * as TransactionHelper from '../helpers/transaction';
@@ -55,6 +59,9 @@ class AccountConcrete implements Account {
         account: response.account!,
         availableBalance: response.account!.availableBalance + amount,
         totalBalance: response.account!.totalBalance + amount,
+        status: (response.account!.status === ACCOUNT_STATUSES.INACTIVE && response.account!.totalBalance == 0 && amount >= MINIMUM_ACCOUNT_DEPOSIT) 
+          ? ACCOUNT_STATUSES.ACTIVE
+          : undefined, 
       });
   
       const transactionResponse: DefaultResponseType = await TransactionHelper.setTransaction({

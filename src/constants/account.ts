@@ -19,3 +19,5 @@ export const ACCOUNT_OPERATIONS = {
   OUTFLOW: 'outflow',
   BALANCE: 'balance',
 };
+
+export const MINIMUM_ACCOUNT_DEPOSIT = 500000;

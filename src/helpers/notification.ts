@@ -7,15 +7,16 @@ import { EVENT_CATEGORIES } from '../constants/notifications';
 export function log(payload: NotificationType) {
   const { type, data } = payload;
 
-  const writeStream = (type === EVENT_CATEGORIES.INTERACTION)
-    ? fs.createWriteStream(`${appRoot}/logs/interactions.txt`)
-    : fs.createWriteStream(`${appRoot}/logs/errors.txt`);
-  
-  writeStream.write(`\n[${new Date().toISOString()}] - ${data}`, 'utf8');
+  const filePath = (type === EVENT_CATEGORIES.INTERACTION)
+    ? `${appRoot}/logs/interactions.txt`
+    : `${appRoot}/logs/errors.txt`;
 
-  writeStream.on('finish', () => {
-    logger.info('Notification log written to file successfully');
-  });
-
-  writeStream.end();
+  try {
+    fs.appendFile(filePath, `\n[${new Date().toISOString()}] - ${data}`, (err) => {
+      if (err) throw err;
+      logger.info('Notification log written to file successfully');
+    });
+  } catch (error) {
+    logger.error(error);
+  }
 }

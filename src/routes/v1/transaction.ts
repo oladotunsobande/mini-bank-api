@@ -5,10 +5,12 @@ import * as TransactionValidation from '../../validations/transaction';
 
 const router = express.Router();
 
+// Authentication and authorization
+router.use(CustomerMiddleware.validateCustomerToken);
+
 // Get transactions
 router.post(
   '/',
-  CustomerMiddleware.validateCustomerExistence,
   TransactionValidation.validateGetTransactions,
   TransactionController.getTransactions,
 );

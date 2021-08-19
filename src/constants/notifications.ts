@@ -9,3 +9,8 @@ export const EVENT_CATEGORIES = {
   INTERACTION: 'event.interaction',
   ERROR: 'event.error',
 };
+
+export const EVENT_CATEGORY_NAMES = {
+  INTERACTION: 'interactions',
+  ERROR: 'errors',
+};

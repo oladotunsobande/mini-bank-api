@@ -3,23 +3,20 @@ import { ExpressRequest } from '../util/express';
 import { Response, NextFunction } from 'express';
 import { ResponseType } from '../types';
 import ResponseHandler from '../util/response-handler';
-import { ACCOUNT_NUMBER_MAX_LENGTH } from '../constants/account';
+import { EVENT_CATEGORY_NAMES } from '../constants/notifications';
 
-export async function validateGetTransactions(
+export async function validateDownloadLog(
   req: ExpressRequest,
   res: Response,
   next: NextFunction,
 ): Promise<ResponseType> {
   const schema = Joi.object().keys({
-    accountNumber: Joi.string()
-      .regex(/^\d+$/)
-      .length(ACCOUNT_NUMBER_MAX_LENGTH)
+    category: Joi.string()
+      .valid(...Object.values(EVENT_CATEGORY_NAMES))
       .required(),
-    skip: Joi.number().min(0),
-    limit: Joi.number().min(1),
   });
 
-  const validation = schema.validate(req.body);
+  const validation = schema.validate(req.params);
   if (validation.error) {
     const error = validation.error.message
       ? validation.error.message

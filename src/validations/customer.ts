@@ -10,7 +10,6 @@ export async function validateCreateCustomer(
   next: NextFunction,
 ): Promise<ResponseType> {
   const schema = Joi.object().keys({
-    customerId: Joi.number().required(),
     name: Joi.string()
       .max(35)
       .required(),

@@ -39,7 +39,6 @@ export const AccountSchema = new Schema(
     bvn: {
       type: String,
       required: false,
-      unique: true,
     },
     lienBalance: {
       type: Number,
