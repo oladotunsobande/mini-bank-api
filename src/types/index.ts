@@ -7,3 +7,8 @@ export type DefaultResponseType = {
   data?: any;
   error?: string;
 };
+
+export type NotificationType = {
+  type: string;
+  data: string;
+};

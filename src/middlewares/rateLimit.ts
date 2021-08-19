@@ -4,6 +4,7 @@ import { ExpressRequest } from '../util/express';
 import { Response, NextFunction } from 'express';
 import { ResponseType } from '../types';
 import ResponseHandler from '../util/response-handler';
+import { REDIS_HOST, REDIS_PORT } from '../config/env';
 import {
   FAILED_LOGIN_KEY_PREFEX,
   API_RATE_LIMITER_POINTS,
@@ -15,8 +16,8 @@ import {
 } from '../constants/security';
 
 const redisClient = redis.createClient({
-  host: 'redis',
-  port: 6379,
+  host: REDIS_HOST,
+  port: parseInt(REDIS_PORT),
   enable_offline_queue: false,
 });
 
