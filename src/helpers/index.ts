@@ -13,3 +13,11 @@ export function randomizeMongoURL(url: string): string {
     `$1${randomBytes(4).toString('hex')}`,
   );
 }
+
+export function setRetryAfterTimeText(retrySeconds: number): string {
+  if (retrySeconds < 60) {
+    return `${retrySeconds} second(s)`;
+  }
+  
+  return `${Math.ceil(retrySeconds)} minute(s)`;
+}

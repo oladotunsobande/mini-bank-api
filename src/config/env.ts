@@ -20,3 +20,5 @@ export const MONGO_URL =
       throwIfUndefined(process.env.MONGO_URL_TEST, 'MONGO_URL_TEST'),
     )
     : throwIfUndefined(process.env.MONGO_URL, 'MONGO_URL');
+
+export const TOKEN_SECRET = throwIfUndefined(process.env.TOKEN_SECRET, 'TOKEN_SECRET');
