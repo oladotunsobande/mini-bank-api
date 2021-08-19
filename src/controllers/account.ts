@@ -125,7 +125,7 @@ export async function transfer(
     const customer = throwIfUndefined(req.customer, 'req.customer');
 
     // Validate source account
-    const payerAccount = await AccountRepository.getOneBy({ accountNumber: sourceAccount });
+    const payerAccount = await AccountRepository.getOneBy({ accountNumber: sourceAccount }) as any;
     if (!payerAccount) {
       return ResponseHandler.sendErrorResponse({
         res,
@@ -134,7 +134,7 @@ export async function transfer(
       });
     }
 
-    if (String(payerAccount.customerId) !== String(customer._id)) {
+    if (String(payerAccount.customerId._id) !== String(customer._id)) {
       return ResponseHandler.sendErrorResponse({
         res,
         error: 'Source account provided does not belong to customer',
@@ -142,7 +142,7 @@ export async function transfer(
     }
 
     // Validate destination account
-    const payeeAccount = await AccountRepository.getOneBy({ accountNumber: destinationAccount });
+    const payeeAccount = await AccountRepository.getOneBy({ accountNumber: destinationAccount }) as any;
     if (!payeeAccount) {
       return ResponseHandler.sendErrorResponse({
         res,
@@ -151,7 +151,7 @@ export async function transfer(
       });
     }
 
-    if (destinationAccountBelongsToCustomer && (String(payeeAccount.customerId) !== String(customer._id))) {
+    if (destinationAccountBelongsToCustomer && (String(payeeAccount.customerId._id) !== String(customer._id))) {
       return ResponseHandler.sendErrorResponse({
         res,
         error: 'Destination account provided does not belong to customer',

@@ -3,13 +3,11 @@ import expect from 'expect';
 import app from '../src/server.app';
 import CustomerRepository from '../src/repositories/CustomerRepository';
 import { Customer, Account } from '../src/models';
-import mongoose from 'mongoose';
 import { db } from '../src/util/mongo';
 
 let token: string;
 let accountNumber: string;
 let accountNumber2: string = '7394907323';
-let customerId: mongoose.Types.ObjectId;
 
 describe('Account Tests', () => {
   before(async () => {
@@ -19,7 +17,6 @@ describe('Account Tests', () => {
       email: 'testing.user3@gmail.com',
       password: 'password123',
     });
-    customerId = customer._id;
 
     const newAccount = new Account({
       customerId: customer._id,
@@ -43,7 +40,7 @@ describe('Account Tests', () => {
   });
 
   after(async () => {
-    //await db.db.dropDatabase();
+    await db.db.dropDatabase();
   });
 
   describe('Account Creation', () => {
@@ -380,7 +377,6 @@ describe('Account Tests', () => {
     });
 
     it('should transfer funds if payload is valid', async () => {
-      console.log(`account1: ${accountNumber}, account2: ${accountNumber2}`);
       const payload = {
         sourceAccount: accountNumber,
         destinationAccount: accountNumber2,
@@ -392,7 +388,6 @@ describe('Account Tests', () => {
         .post('/v1/account/transfer')
         .set('Authorization', `Bearer ${token}`)
         .send(payload);
-        console.log(`error: ${response.body.error}`);
 
         expect(response.status).toBe(200);
         expect(response.body.success).toBe(true);

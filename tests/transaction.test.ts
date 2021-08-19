@@ -32,7 +32,7 @@ describe('Transaction', () => {
   });
 
   after(async () => {
-    //await db.db.dropDatabase();
+    await db.db.dropDatabase();
   });
 
   it('should respond with HTTP status code 400 if auth token is omitted', async () => {
@@ -126,8 +126,6 @@ describe('Transaction', () => {
       .post('/v1/transaction')
       .set('Authorization', `Bearer ${token}`)
       .send(payload);
-
-      console.log(`error: ${response.body.error}`);
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);

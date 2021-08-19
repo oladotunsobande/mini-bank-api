@@ -20,7 +20,7 @@ export async function getTransactions(
   try {
     const customer = throwIfUndefined(req.customer, 'req.customer');
 
-    const account = await AccountRepository.getOneBy({ accountNumber });
+    const account = await AccountRepository.getOneBy({ accountNumber }) as any;
     if (!account) {
       return ResponseHandler.sendErrorResponse({
         res,
@@ -29,7 +29,7 @@ export async function getTransactions(
       });
     }
 
-    if (String(account.customerId) !== String(customer._id)) {
+    if (String(account.customerId._id) !== String(customer._id)) {
       return ResponseHandler.sendErrorResponse({
         res,
         error: 'Account provided does not belong to customer',
