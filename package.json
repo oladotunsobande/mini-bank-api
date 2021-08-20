@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "server": "ts-node src/server.ts",
+    "socket": "ts-node src/socket.ts",
     "dev:server": "nodemon --config nodemon.json src/server.ts",
     "dev:socket": "nodemon --config nodemon.json src/socket.ts",
-    "migrate": "ts-node src/migration/migration.ts",
     "test": "export NODE_ENV=test && DEBUG=true mocha -r ts-node/register --exit --timeout 50000 './tests/*.test.ts'"
   },
   "keywords": [],

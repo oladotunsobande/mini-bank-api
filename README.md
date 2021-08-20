@@ -6,8 +6,9 @@ REST API service for Mono Banking
 
 To setup the app, you need the following dependencies installed on your computer/server.
 
-- `Node.js`: minimum version v14.15.0 LTS
-- `MongoDB`
+- `Node.js`: min. v14.15.0 LTS
+- `MongoDB`: min. v4.0
+- `Redis`: min. v5.0
 
 ## Installation
 
@@ -26,8 +27,12 @@ Set the environment variables listed below:
 ```
 NODE_ENV=
 APP_PORT=
+SOCKET_PORT=
 MONGO_URL=
 MONGO_URL_TEST=
+TOKEN_SECRET=
+REDIS_HOST=
+REDIS_PORT=
 ```
 
 Run the following command to run the test cases:
@@ -35,14 +40,10 @@ Run the following command to run the test cases:
 $ npm run test
 ```
 
-To populate the default customers, run the migration script using the command below:
-```
-$ npm run migrate
-```
-
-You can start the app by running the following command:
+You can start the app and socket servers by running the following commands:
 ```
 $ npm run server
+$ npm run socket
 ```
 
 ## API Documentation
@@ -51,8 +52,6 @@ The REST API documentation for this application is available via the following l
 `https://documenter.getpostman.com/view/7658548/TzCV2isP`
 
 The documentation consists of all information needed to test the API.
-
-The `BASE_URL` for the server is `http://3.213.192.193:8090`.
 
 ## Author
 
