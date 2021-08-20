@@ -8,7 +8,7 @@ To setup the app, you need the following dependencies installed on your computer
 
 - `Node.js`: min. v14.15.0 LTS
 - `MongoDB`: min. v4.0
-- `Redis`: min. v5.0
+- `Redis`: min. v4.0.9
 
 ## Installation
 
